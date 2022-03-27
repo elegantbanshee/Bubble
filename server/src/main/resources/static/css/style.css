@@ -3,13 +3,19 @@ body {
 }
 
 #canvas {
+    float: left;
 }
 
 #size {
     float: left;
+    clear: both;
 }
 
 #undo {
+    float: left;
+}
+
+#save {
     float: left;
 }
 
