@@ -42,8 +42,8 @@ public class BubbleServer {
                 width = image.getWidth() * 800 / image.getHeight();
                 height = 800;
             }
-            image = ImageUtil.scale(image, BufferedImage.TYPE_INT_RGB, image.getWidth(), image.getHeight(),
-                    width, height);
+            image = ImageUtil.scale(image, BufferedImage.TYPE_INT_RGB,
+                    width, height, image.getWidth(), image.getHeight());
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(image, "jpg", outputStream);
 
