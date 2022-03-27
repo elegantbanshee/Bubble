@@ -13,7 +13,7 @@ public class Bubble {
 	
 	public static void main(String[] args) {
 		// Init logger
-        Logger.setLevel(Level.parse("INFO"));
+        Logger.setLevel(Level.parse("VERBOSE"));
         Logger.info("Starting Bubble %s", Constants.VERSION);
         // Parse port
         int port = 5000;
@@ -28,7 +28,7 @@ public class Bubble {
         // Set values
         port(port);
         staticFiles.location("/static/");
-        staticFiles.expireTime(604800); // One Week cache
+        staticFiles.expireTime(60 * 60); // One Week cache
         // Web
         BubbleServer.getGeneric("/", "index.hbs");
         BubbleServer.getGeneric("/edit", "edit.hbs");
