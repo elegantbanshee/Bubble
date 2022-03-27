@@ -101,10 +101,15 @@ Bubble.drawCanvas = function (finished) {
     var canvas = document.getElementById("canvas");
     canvas.width = 800;
     canvas.height = 800;
+    if (Bubble.image) {
+        canvas.width = Bubble.image.width
+        canvas.height = Bubble.image.height
+    }
 
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(Bubble.image, 0, 0);
+    if (Bubble.image)
+        ctx.drawImage(Bubble.image, 0, 0);
 
     var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
