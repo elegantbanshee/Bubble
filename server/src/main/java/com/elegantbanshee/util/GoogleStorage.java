@@ -36,7 +36,7 @@ public class GoogleStorage {
             credentials = GoogleCredentials.fromStream(
                     new ByteArrayInputStream(googleStorageCredentials.getBytes(Charsets.UTF_8)));
         }
-        catch (IOException e) {
+        catch (Exception e) {
             Logger.exception(e);
             byte[] bytes = Base64.getDecoder()
                     .decode(System.getenv("GOOGLE_STORAGE_CREDENTIALS")
@@ -44,7 +44,7 @@ public class GoogleStorage {
             try {
                 credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(bytes));
             }
-            catch (IOException ex) {
+            catch (Exception ex) {
                 ex.printStackTrace();
                 storage = null;
                 bucket = null;
