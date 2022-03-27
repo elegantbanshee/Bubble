@@ -7,6 +7,7 @@ import com.google.common.base.Charsets;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -37,7 +38,9 @@ public class GoogleStorage {
         }
         catch (IOException e) {
             Logger.exception(e);
-            byte[] bytes = Base64.getDecoder().decode(System.getenv("GOOGLE_STORAGE_CREDENTIALS"));
+            byte[] bytes = Base64.getDecoder()
+                    .decode(System.getenv("GOOGLE_STORAGE_CREDENTIALS")
+                            .getBytes(Charsets.UTF_8));
             try {
                 credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(bytes));
             }
