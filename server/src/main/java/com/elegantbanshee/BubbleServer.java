@@ -2,9 +2,11 @@ package com.elegantbanshee;
 
 import com.elegantbanshee.util.GoogleStorage;
 import com.elegantbanshee.util.ImageUtil;
+import com.elegantbanshee.util.RedisUtil;
 import com.goebl.david.Response;
 import com.goebl.david.Webb;
 import net.coobird.thumbnailator.Thumbnailator;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import spark.ModelAndView;
 
@@ -81,6 +83,9 @@ public class BubbleServer {
             byte[] imageBytes = Base64.getDecoder().decode(base64Image);
 
             String id = GoogleStorage.uploadBubble(imageBytes);
+
+            RedisUtil.pushImage(id);
+
             JSONObject json = new JSONObject();
             json.put("id", id);
             return json.toString();
@@ -92,6 +97,13 @@ public class BubbleServer {
             Map<String, Object> model = new HashMap<>();
             model.put("id", request.params("id"));
             return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        });
+    }
+
+    public static void getTopImages(String path) {
+        get(path, (request, response) -> {
+            JSONArray topImages = RedisUtil.getTopImages();
+            return topImages.toString();
         });
     }
 }

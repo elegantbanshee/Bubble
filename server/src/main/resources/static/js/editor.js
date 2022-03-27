@@ -33,7 +33,13 @@ Bubble.handleSave = function () {
     }
     request.open("PUT", "/api/image/upload_bubble");
     request.send(image);
-    //window.location.href = image;
+
+    var save = document.getElementById("save");
+    document.body.removeChild(save);
+
+    var p = document.createElement("p");
+    p.innerText = "Uploading."
+    document.body.appendChild(p);
 };
 
 Bubble.createImage = function () {

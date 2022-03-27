@@ -3,6 +3,7 @@ package com.elegantbanshee;
 import com.elegantbanshee.data.Constants;
 import com.elegantbanshee.util.GoogleStorage;
 import com.elegantbanshee.util.Logger;
+import com.elegantbanshee.util.RedisUtil;
 
 import java.util.logging.Level;
 
@@ -35,9 +36,11 @@ public class Bubble {
         BubbleServer.putImage("/api/image/upload");
         BubbleServer.putImageBubble("/api/image/upload_bubble");
         BubbleServer.getRawImage("/api/image/raw/:id");
+        BubbleServer.getTopImages("/api/image/top");
         BubbleServer.getImagePage("/:id", "image.hbs");
         // init
         GoogleStorage.init();
+        RedisUtil.init();
 	}
 	
 	/**
