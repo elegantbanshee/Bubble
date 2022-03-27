@@ -7,6 +7,7 @@ import com.google.common.base.Charsets;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.UUID;
 
 public class GoogleStorage {
@@ -36,9 +37,16 @@ public class GoogleStorage {
         }
         catch (IOException e) {
             Logger.exception(e);
-            storage = null;
-            bucket = null;
-            return;
+            byte[] bytes = Base64.getDecoder().decode(System.getenv("GOOGLE_STORAGE_CREDENTIALS"));
+            try {
+                credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(bytes));
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+                storage = null;
+                bucket = null;
+                return;
+            }
         }
         if (credentials == null) {
             Logger.warn("Invalid Google Storage credentials");
