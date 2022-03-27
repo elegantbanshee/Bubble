@@ -13,7 +13,7 @@ public class Bubble {
 	
 	public static void main(String[] args) {
 		// Init logger
-        Logger.setLevel(Level.parse("VERBOSE"));
+        Logger.setLevel(Level.ALL);
         Logger.info("Starting Bubble %s", Constants.VERSION);
         // Parse port
         int port = 5000;
