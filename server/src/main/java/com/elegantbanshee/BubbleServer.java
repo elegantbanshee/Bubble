@@ -1,6 +1,7 @@
 package com.elegantbanshee;
 
 import com.elegantbanshee.util.GoogleStorage;
+import com.elegantbanshee.util.ImageUtil;
 import com.goebl.david.Response;
 import com.goebl.david.Webb;
 import org.json.JSONObject;
@@ -9,8 +10,10 @@ import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +30,24 @@ public class BubbleServer {
     public static void putImage(String path) {
         put(path, ((request, response) -> {
             byte[] body = request.bodyAsBytes();
-            String id = GoogleStorage.uploadRaw(body);
+            ByteArrayInputStream imageStream = new ByteArrayInputStream(body);
+            BufferedImage image = ImageIO.read(imageStream);
+            int width;
+            int height;
+            if (image.getWidth() > image.getHeight()) {
+                width = 800;
+                height = 800 * image.getHeight() / image.getWidth();
+            }
+            else {
+                width = image.getWidth() * 800 / image.getHeight();
+                height = 800;
+            }
+            image = ImageUtil.scale(image, BufferedImage.TYPE_INT_RGB, image.getWidth(), image.getHeight(),
+                    width, height);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", outputStream);
+
+            String id = GoogleStorage.uploadRaw(outputStream.toByteArray());
             JSONObject json = new JSONObject();
             json.put("id", id);
             return json.toString();
