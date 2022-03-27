@@ -4,6 +4,7 @@ import com.elegantbanshee.util.GoogleStorage;
 import com.elegantbanshee.util.ImageUtil;
 import com.goebl.david.Response;
 import com.goebl.david.Webb;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.json.JSONObject;
 import spark.ModelAndView;
 
@@ -32,6 +33,8 @@ public class BubbleServer {
             byte[] body = request.bodyAsBytes();
             ByteArrayInputStream imageStream = new ByteArrayInputStream(body);
             BufferedImage image = ImageIO.read(imageStream);
+
+
             int width;
             int height;
             if (image.getWidth() > image.getHeight()) {
@@ -42,12 +45,14 @@ public class BubbleServer {
                 width = image.getWidth() * 800 / image.getHeight();
                 height = 800;
             }
-            image = ImageUtil.scale(image, BufferedImage.TYPE_INT_RGB,
-                    width, height, image.getWidth(), image.getHeight());
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(image, "jpg", outputStream);
 
-            String id = GoogleStorage.uploadRaw(outputStream.toByteArray());
+
+            BufferedImage resizedImage = Thumbnailator.createThumbnail(image, width, height);
+            ByteArrayOutputStream resizedImageByteOutputStream = new ByteArrayOutputStream();
+            boolean wrote = ImageIO.write(resizedImage, "png", resizedImageByteOutputStream);
+
+
+            String id = GoogleStorage.uploadRaw(resizedImageByteOutputStream.toByteArray());
             JSONObject json = new JSONObject();
             json.put("id", id);
             return json.toString();

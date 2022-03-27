@@ -42,11 +42,10 @@ Bubble.createImage = function () {
 
     const params = new URLSearchParams(window.location.search)
 
+    Bubble.image.addEventListener("load", Bubble.handleImageLoad);
+
     Bubble.image.src = "/api/image/raw/ID"
         .replace("ID", params.get("id"));
-
-
-    Bubble.image.addEventListener("load", Bubble.handleImageLoad)
 };
 
 Bubble.handleImageLoad = function () {
