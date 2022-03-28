@@ -1,10 +1,13 @@
 package com.elegantbanshee;
 
+import com.elegantbanshee.data.Image;
 import com.elegantbanshee.util.GoogleStorage;
 import com.elegantbanshee.util.ImageUtil;
+import com.elegantbanshee.util.PostgresUtil;
 import com.elegantbanshee.util.RedisUtil;
 import com.goebl.david.Response;
 import com.goebl.david.Webb;
+import com.google.gson.Gson;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,9 +20,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BubbleServer {
     
@@ -84,7 +85,7 @@ public class BubbleServer {
 
             String id = GoogleStorage.uploadBubble(imageBytes);
 
-            RedisUtil.pushImage(id);
+            PostgresUtil.pushImage(id);
 
             JSONObject json = new JSONObject();
             json.put("id", id);
@@ -102,8 +103,9 @@ public class BubbleServer {
 
     public static void getTopImages(String path) {
         get(path, (request, response) -> {
-            JSONArray topImages = RedisUtil.getTopImages();
-            return topImages.toString();
+            List<Image> topImages = PostgresUtil.getImages(
+                    request.queryParamOrDefault("page", "1"));
+            return new Gson().toJson(topImages);
         });
     }
 }

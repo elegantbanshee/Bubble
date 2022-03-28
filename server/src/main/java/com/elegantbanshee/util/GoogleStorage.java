@@ -37,7 +37,7 @@ public class GoogleStorage {
                     new ByteArrayInputStream(googleStorageCredentials.getBytes(Charsets.UTF_8)));
         }
         catch (Exception e) {
-            Logger.exception(e);
+            Logger.debug("Failed to parse raw Google credentials. Will now try Base64 decode");
             byte[] bytes = Base64.getDecoder()
                     .decode(System.getenv("GOOGLE_STORAGE_CREDENTIALS")
                             .getBytes(Charsets.UTF_8));

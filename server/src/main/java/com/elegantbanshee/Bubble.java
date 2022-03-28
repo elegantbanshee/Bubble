@@ -3,6 +3,7 @@ package com.elegantbanshee;
 import com.elegantbanshee.data.Constants;
 import com.elegantbanshee.util.GoogleStorage;
 import com.elegantbanshee.util.Logger;
+import com.elegantbanshee.util.PostgresUtil;
 import com.elegantbanshee.util.RedisUtil;
 
 import java.util.logging.Level;
@@ -31,16 +32,18 @@ public class Bubble {
         staticFiles.expireTime(60 * 60); // One Week cache
         // Web
         BubbleServer.getGeneric("/", "index.hbs");
+        BubbleServer.getGeneric("/:page", "index.hbs");
         BubbleServer.getGeneric("/edit", "edit.hbs");
         BubbleServer.getGeneric("/upload", "upload.hbs");
         BubbleServer.putImage("/api/image/upload");
         BubbleServer.putImageBubble("/api/image/upload_bubble");
         BubbleServer.getRawImage("/api/image/raw/:id");
         BubbleServer.getTopImages("/api/image/top");
-        BubbleServer.getImagePage("/:id", "image.hbs");
+        BubbleServer.getImagePage("/i/:id", "image.hbs");
         // init
         GoogleStorage.init();
         RedisUtil.init();
+        PostgresUtil.init();
 	}
 	
 	/**

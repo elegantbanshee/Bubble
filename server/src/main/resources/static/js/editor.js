@@ -28,7 +28,7 @@ Bubble.handleSave = function () {
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var json = JSON.parse(this.responseText);
-            window.location = "/ID".replace("ID", json.id);
+            window.location = "/i/ID".replace("ID", json.id);
         }
     }
     request.open("PUT", "/api/image/upload_bubble");
