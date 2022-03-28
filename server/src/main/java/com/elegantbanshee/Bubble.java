@@ -32,7 +32,6 @@ public class Bubble {
         staticFiles.expireTime(60 * 60); // One Week cache
         // Web
         BubbleServer.getGeneric("/", "index.hbs");
-        BubbleServer.getGeneric("/:page", "index.hbs");
         BubbleServer.getGeneric("/edit", "edit.hbs");
         BubbleServer.getGeneric("/upload", "upload.hbs");
         BubbleServer.putImage("/api/image/upload");
@@ -40,6 +39,7 @@ public class Bubble {
         BubbleServer.getRawImage("/api/image/raw/:id");
         BubbleServer.getTopImages("/api/image/top");
         BubbleServer.getImagePage("/i/:id", "image.hbs");
+        BubbleServer.getGeneric("/:page", "index.hbs");
         // init
         GoogleStorage.init();
         RedisUtil.init();
