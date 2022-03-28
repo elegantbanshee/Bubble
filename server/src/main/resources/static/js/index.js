@@ -15,7 +15,7 @@ Index.main = function () {
 
 Index.addImage = function (id) {
     var image = document.createElement("img");
-    image.src = "https://storage.googleapis.com/bubble_com/bubble/ID".replace("ID", id);
+    image.src = "https://storage.googleapis.com/bubble_com/bubble/ID.png".replace("ID", id);
     image.className = "image";
     var div = document.getElementById("images");
     div.appendChild(image);
