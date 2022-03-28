@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class GoogleStorage {
     private static final String BUCKET_ID = "bubble_com";
-    public static final String RAW_URL = "https://storage.googleapis.com/bubble_com/raw/%s";
+    public static final String RAW_URL = "https://storage.googleapis.com/bubble_com/raw/%s.png";
     public static Storage storage;
     public static Bucket bucket;
 
@@ -25,7 +25,7 @@ public class GoogleStorage {
             return null;
         }
         String id = UUID.randomUUID().toString();
-        bucket.create(String.format("raw/%s", id), new ByteArrayInputStream(body));
+        bucket.create(String.format("raw/%s.png", id), new ByteArrayInputStream(body));
         return id;
     }
 
@@ -79,7 +79,7 @@ public class GoogleStorage {
             return null;
         }
         String id = UUID.randomUUID().toString();
-        bucket.create(String.format("bubble/%s", id), new ByteArrayInputStream(body));
+        bucket.create(String.format("bubble/%s.png", id), new ByteArrayInputStream(body));
         return id;
     }
 }
