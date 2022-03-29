@@ -38,11 +38,14 @@ Index.handleNext = function () {
 };
 
 Index.addImage = function (id) {
+    var a = document.createElement("a");
+    a.href = "/i/ID".replace("ID", id);
     var image = document.createElement("img");
     image.src = "https://storage.googleapis.com/bubble_com/bubble/ID.png".replace("ID", id);
     image.className = "image";
     var div = document.getElementById("images");
-    div.appendChild(image);
+    a.appendChild(image);
+    div.appendChild(a);
 };
 
 window.addEventListener("load", Index.main)
