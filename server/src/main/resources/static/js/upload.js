@@ -3,15 +3,8 @@ var Upload = {};
 Upload.main = function () {
     var upload = document.getElementById("upload");
 
-    var input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.multiple = false;
-    upload.addEventListener("click", function () {
-        input.click();
-    });
-    input.addEventListener("change", function () {
-        Upload.handleUpload(input.files[0]);
+    upload.addEventListener("change", function () {
+        Upload.handleUpload(upload.files[0]);
     });
 };
 

@@ -19,7 +19,7 @@ body {
     float: left;
 }
 
-#upload-prompt {
+#upload-prompt, #home-link {
     font-size: 60px;
 }
 
