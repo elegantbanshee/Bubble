@@ -32,3 +32,12 @@ body {
     height: 1000px;
     font-size: 60px;
 }
+
+#comment-field {
+    width: 500px;
+    height: 150px;
+}
+
+#comment-submit {
+
+}
