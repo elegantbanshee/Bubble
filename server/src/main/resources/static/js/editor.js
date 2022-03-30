@@ -131,9 +131,10 @@ Bubble.drawCanvas = function (finished) {
                 var a = 255;
 
                 if (finished) {
-                    r = 255;
-                    g = 0;
-                    b = 0;
+                    var rgb = Bubble.getColor();
+                    r = rgb[0];
+                    g = rgb[1];
+                    b = rgb[2];
                     a = 255;
                 }
                 imageData.data.set([r, g, b, a], index);
@@ -142,6 +143,30 @@ Bubble.drawCanvas = function (finished) {
     }
 
     ctx.putImageData(imageData, 0, 0);
+};
+
+Bubble.getColor = function () {
+    var r = 0;
+    var g = 0;
+    var b = 0;
+    var input = document.getElementById("color");
+    var h = input.value;
+
+    // 3 digits
+    if (h.length == 4) {
+        r = "0x" + h[1] + h[1];
+        g = "0x" + h[2] + h[2];
+        b = "0x" + h[3] + h[3];
+
+        // 6 digits
+    }
+    else if (h.length == 7) {
+        r = "0x" + h[1] + h[2];
+        g = "0x" + h[3] + h[4];
+        b = "0x" + h[5] + h[6];
+    }
+
+    return [r, g, b];
 };
 
 Bubble.isCirclePixel = function (x, y) {
