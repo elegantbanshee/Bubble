@@ -1,10 +1,7 @@
 package com.elegantbanshee;
 
 import com.elegantbanshee.data.Image;
-import com.elegantbanshee.util.GoogleStorage;
-import com.elegantbanshee.util.ImageUtil;
-import com.elegantbanshee.util.PostgresUtil;
-import com.elegantbanshee.util.RedisUtil;
+import com.elegantbanshee.util.*;
 import com.goebl.david.Response;
 import com.goebl.david.Webb;
 import com.google.gson.Gson;
@@ -51,9 +48,13 @@ public class BubbleServer {
 
 
             BufferedImage resizedImage = Thumbnailator.createThumbnail(image, width, height);
-            ByteArrayOutputStream resizedImageByteOutputStream = new ByteArrayOutputStream();
-            boolean wrote = ImageIO.write(resizedImage, "png", resizedImageByteOutputStream);
 
+
+            if (BrowserUtil.shouldRotate(request.userAgent()))
+                resizedImage = ImageUtil.rotateImage(resizedImage);
+
+            ByteArrayOutputStream resizedImageByteOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(resizedImage, "png", resizedImageByteOutputStream);
 
             String id = GoogleStorage.uploadRaw(resizedImageByteOutputStream.toByteArray());
             JSONObject json = new JSONObject();

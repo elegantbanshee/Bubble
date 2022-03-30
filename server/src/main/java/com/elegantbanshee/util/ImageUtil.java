@@ -3,6 +3,7 @@ package com.elegantbanshee.util;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -38,5 +39,15 @@ public class ImageUtil {
             g.drawRenderedImage(sbi, at);
         }
         return dbi;
+    }
+
+    // https://stackoverflow.com/a/8639615
+    public static BufferedImage rotateImage(BufferedImage image) {
+        double rotationRequired = Math.toRadians(90);
+        double locationX = image.getWidth() / 2;
+        double locationY = image.getHeight() / 2;
+        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+        return op.filter(image, null);
     }
 }
